@@ -2,6 +2,15 @@ import cv2
 import time
 import os
 
+if not os.path.exists("clarifai_frames"):
+    os.makedirs("clarifai_frames")
+
+if not os.path.exists("flagged_clips"):
+    os.makedirs("flagged_clips")
+
+if not os.path.exists("video_log"):
+    os.makedirs("video_log")
+
 #number of frames being sent to clarifai
 clarifai_fps = 5
 log_time = 5
@@ -20,6 +29,7 @@ out = cv2.VideoWriter("video_log/"+session_time+".avi",fourcc,20,(640,480))
 
 clip_time = 0
 frame_index = 0
+clip_index = 0
 
 clip_directory = ""
 
@@ -73,8 +83,9 @@ while True:
     if k == ord('f') and not flagging:
         clip_time = time.time()
         clip_time_str = str(new_time).replace(".","")
-        clip_directory = "flagged_clips/"+session_time+"/clip_"+clip_time_str+".avi"
+        clip_directory = "flagged_clips/"+session_time+"/clip_"+str(clip_index)+"_"+clip_time_str+".avi"
         clip = cv2.VideoWriter(clip_directory,fourcc,20,(640,480))
+        clip_index += 1
 
 cap.release()
 out.release()
