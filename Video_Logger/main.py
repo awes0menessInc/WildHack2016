@@ -12,7 +12,7 @@ if not os.path.exists("video_log"):
     os.makedirs("video_log")
 
 #number of frames being sent to clarifai
-clarifai_fps = 3
+clarifai_fps = 6
 log_time = 5
 flagging = False
 
@@ -25,7 +25,7 @@ cap = cv2.VideoCapture(0)
 fourcc = cv2.cv.CV_FOURCC(*'XVID')
 
 #initialize output object
-session_time = time.strftime("%d-%m-%Y")+"_"+time.strftime("%H:%M:%S")
+session_time = time.strftime("%d-%m-%Y")
 out = cv2.VideoWriter("video_log/"+session_time+".avi",fourcc,20,(640,480))
 
 clip_time = 0
