@@ -21,7 +21,8 @@ flagging = False
 cap = cv2.VideoCapture(0)
 
 #initialize the codec
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
+#fourcc = cv2.VideoWriter_fourcc(*'XVID')
+fourcc = cv2.cv.CV_FOURCC(*'XVID')
 
 #initialize output object
 session_time = time.strftime("%d-%m-%Y")+"_"+time.strftime("%H:%M:%S")
