@@ -12,7 +12,7 @@ if not os.path.exists("video_log"):
     os.makedirs("video_log")
 
 #number of frames being sent to clarifai
-clarifai_fps = 5
+clarifai_fps = 3
 log_time = 5
 flagging = False
 
@@ -60,7 +60,7 @@ while True:
     #save frames at the rate of the fps specified
     if(new_time-current_time >= 1.0/clarifai_fps):
         new_time_str = str(new_time).replace(".","")
-        cv2.imwrite("clarifai_frames/"+session_time+"/frame"+"_"+str(frame_index)+"_"+new_time_str+".png",frame)
+        cv2.imwrite("clarifai_frames/"+session_time+"/"+str(frame_index)+".png",frame)
         current_time = time.time()
         frame_index +=1
 
@@ -83,7 +83,7 @@ while True:
     if k == ord('f') and not flagging:
         clip_time = time.time()
         clip_time_str = str(new_time).replace(".","")
-        clip_directory = "flagged_clips/"+session_time+"/clip_"+str(clip_index)+"_"+clip_time_str+".avi"
+        clip_directory = "flagged_clips/"+session_time+"/"+str(clip_index)+".avi"
         clip = cv2.VideoWriter(clip_directory,fourcc,20,(640,480))
         clip_index += 1
 
