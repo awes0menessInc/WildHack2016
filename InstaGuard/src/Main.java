@@ -19,6 +19,45 @@ import clarifai2.dto.model.output_info.ConceptOutputInfo;
 import clarifai2.dto.prediction.Concept;
 
 public class Main {
+	
+	private static void analyzeFrames(ArrayList<ArrayList<List<String>>> w) {
+				
+		double[] averages = new double[9];
+				
+		int count = 0;
+		
+		for (int i = 0; i < w.size(); i++) {
+			for (int j = 0; j < 9; j++) {
+				averages[j] += Double.parseDouble(w.get(i).get(j).get(1));
+			}
+		}
+		
+		ArrayList<String> tags = new ArrayList<String>();
+		
+		for (int j = 0; j < 9; j++) {
+			
+			averages[j] /= w.size();
+			if (j != 0 && j != 6 && averages[j] >= 0.3) {
+				
+				tags.add(w.get(0).get(j).get(0));
+				count++;
+			}
+		}
+				
+		if (count >= 3) {
+			System.out.println("Footage appears to be Abnormal - manual inspection is advised.");
+			System.out.println("Tags: " + tags);
+			
+		} else if(averages[0] > averages[6]) {
+			
+			System.out.println("Footage appears to be abnormal - manual inspectiom is advised.");
+			
+		} else {
+			
+			System.out.println("Footage appears to be normal - no action is necessary.");
+		}
+	}
+	
 	public static void main(String[] args) {
 		
 		boolean haveCreatedModel = true;
@@ -282,10 +321,11 @@ public class Main {
 				//System.out.println("--- NEXT IMAGE ---");
 			}
 			
-			for(int i = 0; i < wrapperList.size(); i++) {
-				System.out.println(wrapperList.get(i));
-			}
+// 			for(int i = 0; i < wrapperList.size(); i++) {
+// 				System.out.println(wrapperList.get(i));
+// 			}
 			
+			analyzeFrames(wrapperList);
 			
 			//imgProperties = [ ["abnormal", .135325476], ["car crash", ], [], [], [], [], [], [], [] ]
 			
