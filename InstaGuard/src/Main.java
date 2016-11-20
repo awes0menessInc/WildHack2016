@@ -25,10 +25,22 @@ import com.twilio.type.PhoneNumber;
 
 public class Main {
 	
+	public static final String ACCOUNT_SID = "AC93bc79a222d23f5e7e09308591e8bec2";
+    public static final String AUTH_TOKEN = "ceef4b2d00ddca1ddc4b73ede5bc4539";
+	
+	private static void sendSMS(String m) throws URISyntaxException{
+	
+		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+		Message message = Message
+				.creator(new PhoneNumber("+14088934962"),  // to
+						new PhoneNumber("+14083421269"),  // from
+						m)
+						.create();
+	}
+	
 	private static void analyzeFrames(ArrayList<ArrayList<List<String>>> w) {
 				
 		double[] averages = new double[9];
-				
 		int count = 0;
 		
 		for (int i = 0; i < w.size(); i++) {
@@ -63,6 +75,13 @@ public class Main {
 		} else if(averages[0] > averages[6]) {
 			
 			System.out.println("Footage appears to be abnormal - manual inspectiom is advised.");
+			
+			try {
+				sendSMS("Footage appears to be Abnormal - manual inspection advised.");
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		} else {
 			
@@ -341,13 +360,10 @@ public class Main {
 			
 			//imgProperties = [ ["abnormal", .135325476], ["car crash", ], [], [], [], [], [], [], [] ]
 			
-		
 //		client.predict("abnormal_m")
 //			.withInputs(
 //					ClarifaiInput.forImage(ClarifaiImage.of("http://2.bp.blogspot.com/-DnF8fY0BhW4/UVjbGMo6jmI/AAAAAAAACEk/qtPz-pYSPJ4/s1600/IMG_0389.JPG"))
 //			).executeSync().get();
 		
-		
 	}
-	
 }
