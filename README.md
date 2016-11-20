@@ -1,5 +1,5 @@
 ## InstaGuard
-Image processing application that identifies abnormalities and other violent behavior within a video feed, then sends push notifications as a result
+Image processing application that sends push notifications when abnormalities appear on security footage
 
 
 APIs Utilized:
