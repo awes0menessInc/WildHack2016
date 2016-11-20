@@ -27,15 +27,16 @@ public class Main {
 	
 	public static final String ACCOUNT_SID = "AC93bc79a222d23f5e7e09308591e8bec2";
     public static final String AUTH_TOKEN = "ceef4b2d00ddca1ddc4b73ede5bc4539";
-    public static final double MINIMUM_PROBABILITY = 0.3; //30%\
+    public static final String contactNum = "+14088934962";
+    public static final double MINIMUM_PROBABILITY = 0.3; //30%
 	
-	private static void sendSMS(String m) throws URISyntaxException{
+	private static void sendSMS(String msg) throws URISyntaxException{
 	
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 		Message message = Message.creator(
-			new PhoneNumber("+14088934962"),  // to
+			new PhoneNumber(contactNum),  // to
 			new PhoneNumber("+14083421269"),  // from, Twilio Phone Number
-			m).create();
+			msg).create();
 	}
 	
 	private static void analyzeFrames(ArrayList<ArrayList<List<String>>> w) {
@@ -54,8 +55,8 @@ public class Main {
 		for (int j = 0; j < 9; j++) {
 			
 			averages[j] /= w.size();
+			
 			if (j != 0 && j != 6 && averages[j] >= MINIMUM_PROBABILITY) {
-				
 				tags.add(w.get(0).get(j).get(0));
 				count++;
 			}
@@ -84,7 +85,6 @@ public class Main {
 			}
 			
 		} else {
-			
 			System.out.println("Footage appears to be normal - no action is necessary.");
 		}
 	}
