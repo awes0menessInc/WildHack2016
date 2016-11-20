@@ -18,6 +18,11 @@ import clarifai2.dto.model.output.ClarifaiOutput;
 import clarifai2.dto.model.output_info.ConceptOutputInfo;
 import clarifai2.dto.prediction.Concept;
 
+//Install the Java helper library from twilio.com/docs/java/install
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
 public class Main {
 	
 	private static void analyzeFrames(ArrayList<ArrayList<List<String>>> w) {
@@ -47,6 +52,13 @@ public class Main {
 		if (count >= 3) {
 			System.out.println("Footage appears to be Abnormal - manual inspection is advised.");
 			System.out.println("Tags: " + tags);
+			
+			try {
+				sendSMS("Footage appears to be Abnormal - manual inspection advised. Tags: " + tags);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		} else if(averages[0] > averages[6]) {
 			
